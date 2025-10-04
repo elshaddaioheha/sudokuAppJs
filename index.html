@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SudokuJS Demo</title>
+  <link rel="stylesheet" href="sudokuJS.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="sudokuJS.js"></script>
+  <style>
+    body {
+      background: #f7f7fa;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2em auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      padding: 2em 2em 2em 2em;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      color: #2d2d6a;
+      margin-bottom: 0.5em;
+      letter-spacing: 1px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5em;
+      margin-bottom: 1.5em;
+    }
+    .controls button {
+      background: #2d2d6a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 1px 4px rgba(44,44,44,0.08);
+    }
+    .controls button:hover, .controls button:focus {
+      background: #4b4bb7;
+      outline: none;
+    }
+    .sudoku-board {
+      margin: 0 auto;
+      box-shadow: 0 1px 8px rgba(44,44,44,0.08);
+      border-radius: 8px;
+      background: #fafaff;
+      padding: 1em;
+      display: inline-block;
+    }
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.95em;
+      margin-top: 2em;
+    }
+    @media (max-width: 700px) {
+      .container {
+        max-width: 98vw;
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SudokuJS</h1>
+    <div class="controls">
+      <button id="solveStep">Solve Step</button>
+      <button id="solveAll">Solve All</button>
+      <button id="showCandidates">Show Candidates</button>
+      <button id="hideCandidates">Hide Candidates</button>
+      <button id="clearBoard">Clear Board</button>
+      <button id="generateEasy">Easy</button>
+      <button id="generateMedium">Medium</button>
+      <button id="generateHard">Hard</button>
+      <button id="generateVeryHard">Very Hard</button>
+    </div>
+    <div id="sudoku" class="sudoku-board"></div>
+    <div class="footer">
+      <span>Powered by <a href="https://github.com/pocketjoso/sudokuJS" target="_blank" style="color:#4b4bb7;text-decoration:none;">SudokuJS</a></span>
+    </div>
+  </div>
+  <script>
+    var mySudokuJS = $("#sudoku").sudokuJS({
+      difficulty: "medium",
+      boardUpdatedFn: function(data) {},
+      boardFinishedFn: function(data) {
+        alert("Board finished! Difficulty: " + (data.difficultyInfo ? data.difficultyInfo.level : "unknown"));
+      },
+      boardErrorFn: function(data) {
+        alert("Board error: " + data.msg);
+      },
+      candidateShowToggleFn: function(showing) {}
+    });
+
+    $("#solveStep").click(function() { mySudokuJS.solveStep(); });
+    $("#solveAll").click(function() { mySudokuJS.solveAll(); });
+    $("#showCandidates").click(function() { mySudokuJS.showCandidates(); });
+    $("#hideCandidates").click(function() { mySudokuJS.hideCandidates(); });
+    $("#clearBoard").click(function() { mySudokuJS.clearBoard(); });
+    $("#generateEasy").click(function() { mySudokuJS.generateBoard('easy'); });
+    $("#generateMedium").click(function() { mySudokuJS.generateBoard('medium'); });
+    $("#generateHard").click(function() { mySudokuJS.generateBoard('hard'); });
+    $("#generateVeryHard").click(function() { mySudokuJS.generateBoard('very hard'); });
+  </script>
+</body>
+</html>
